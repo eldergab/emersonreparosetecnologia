@@ -1,130 +1,258 @@
-<section>
-    <h2>📋 Fazer Pedido</h2>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Pedidos Profissional</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #64748b;
+            --success: #22c55e;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+        }
 
-    <!-- ABAS -->
-    <div>
-        <button onclick="abrirAba('grafica')">🖨️ Gráfica</button>
-        <button onclick="abrirAba('servico')">🔧 Serviços</button>
-        <button onclick="abrirAba('reciclagem')">♻️ Reciclagem</button>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+
+        body { background-color: var(--bg); color: var(--text); padding: 20px; line-height: 1.6; }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        header { text-align: center; margin-bottom: 30px; }
+        header h1 { font-size: 1.5rem; color: var(--primary); }
+
+        /* Estilo das Abas */
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 5px; }
+        .tab-btn {
+            padding: 12px 20px; border: none; border-radius: 8px; background: #e2e8f0;
+            cursor: pointer; font-weight: 600; color: var(--secondary); white-space: nowrap;
+            transition: 0.3s; flex: 1;
+        }
+        .tab-btn.active { background: var(--primary); color: white; }
+
+        /* Cards de Formulário */
+        .card { background: var(--card); padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .card h3 { margin-bottom: 15px; font-size: 1.1rem; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; }
+
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; color: var(--secondary); }
+        
+        input, select, textarea {
+            width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px;
+            font-size: 1rem; outline: none; transition: 0.2s;
+        }
+        input:focus { border-color: var(--primary); ring: 2px solid #bfdbfe; }
+
+        .row { display: flex; gap: 10px; }
+        .row > div { flex: 1; }
+
+        /* Resultados e Botões */
+        .total-box {
+            background: #f1f5f9; padding: 15px; border-radius: 8px; text-align: center;
+            font-size: 1.2rem; font-weight: 700; color: var(--primary); margin: 15px 0;
+        }
+
+        .btn-send {
+            width: 100%; background: var(--success); color: white; border: none;
+            padding: 16px; border-radius: 8px; font-size: 1.1rem; font-weight: 700;
+            cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        .btn-send:hover { opacity: 0.9; }
+
+        .aba { display: none; }
+        .aba.active { display: block; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1><i class="fas fa-file-invoice-dollar"></i> Sistema de Pedidos</h1>
+    </header>
+
+    <div class="card">
+        <h3><i class="fas fa-user"></i> Informações do Cliente</h3>
+        <div class="form-group">
+            <label>Nome Completo / Empresa</label>
+            <input type="text" id="clienteNome" placeholder="Ex: João Silva">
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <label>WhatsApp</label>
+                <input type="tel" id="clienteWhats" placeholder="(62) 9....">
+            </div>
+            <div class="form-group">
+                <label>Forma de Pagamento</label>
+                <select id="pagamento">
+                    <option value="PIX">PIX (5% desc)</option>
+                    <option value="Cartão">Cartão Crédito/Débito</option>
+                    <option value="Dinheiro">Dinheiro</option>
+                </select>
+            </div>
+        </div>
     </div>
 
-    <!-- ================= GRAFICA ================= -->
-    <div id="grafica" class="aba">
-        <h3>Pedido - Gráfica Rápida</h3>
-
-        <input id="tipoGrafica" placeholder="Tipo (banner, adesivo, etc)">
-        <input id="largura" type="number" placeholder="Largura (m)">
-        <input id="altura" type="number" placeholder="Altura (m)">
-        <input id="valorMetro" type="number" placeholder="Valor por m²">
-
-        <button onclick="calcularGrafica()">Calcular</button>
-
-        <p id="resultadoGrafica"></p>
-
-        <button onclick="enviarWhats('grafica')">Enviar Pedido</button>
+    <div class="tabs">
+        <button class="tab-btn active" onclick="abrirAba(event, 'grafica')">🖨️ Gráfica</button>
+        <button class="tab-btn" onclick="abrirAba(event, 'servico')">🔧 Serviços</button>
+        <button class="tab-btn" onclick="abrirAba(event, 'reciclagem')">♻️ Reciclagem</button>
     </div>
 
-    <!-- ================= SERVIÇOS ================= -->
-    <div id="servico" class="aba" style="display:none;">
-        <h3>Pedido - Serviços</h3>
-
-        <input id="tipoServico" placeholder="Tipo de serviço">
-        <select id="modo">
-            <option value="diaria">Por diária</option>
-            <option value="unidade">Por unidade</option>
-        </select>
-
-        <input id="quantidade" type="number" placeholder="Quantidade">
-        <input id="valorUnit" type="number" placeholder="Valor">
-
-        <button onclick="calcularServico()">Calcular</button>
-
-        <p id="resultadoServico"></p>
-
-        <button onclick="enviarWhats('servico')">Enviar Pedido</button>
+    <div id="grafica" class="aba active">
+        <div class="card">
+            <h3>Detalhes da Impressão</h3>
+            <div class="form-group">
+                <label>O que deseja produzir?</label>
+                <select id="tipoGrafica">
+                    <option value="Banner">Banner</option>
+                    <option value="Adesivo">Adesivo Vinil</option>
+                    <option value="Lona">Lona Frontlight</option>
+                    <option value="Placa">Placa PVC/ACM</option>
+                </select>
+            </div>
+            <div class="row">
+                <div class="form-group"><label>Largura (m)</label><input type="number" id="largura" step="0.01" oninput="calcularGrafica()"></div>
+                <div class="form-group"><label>Altura (m)</label><input type="number" id="altura" step="0.01" oninput="calcularGrafica()"></div>
+            </div>
+            <div class="form-group">
+                <label>Acabamento</label>
+                <select id="acabamentoGrafica">
+                    <option value="Nenhum">Sem acabamento</option>
+                    <option value="Ilhós">Com Ilhós (Anéis)</option>
+                    <option value="Madeira e Cordão">Madeira e Cordão</option>
+                    <option value="Corte Especial">Corte Especial</option>
+                </select>
+            </div>
+            <input type="hidden" id="vMetro" value="65"> <div class="total-box" id="resGrafica">Total: R$ 0,00</div>
+        </div>
     </div>
 
-    <!-- ================= RECICLAGEM ================= -->
-    <div id="reciclagem" class="aba" style="display:none;">
-        <h3>Coleta / Estopa</h3>
-
-        <input id="tipoRec" placeholder="Tipo (estopa, coleta, etc)">
-        <input id="peso" type="number" placeholder="Peso (kg)">
-        <input id="valorKg" type="number" placeholder="Valor por kg">
-
-        <button onclick="calcularRec()">Calcular</button>
-
-        <p id="resultadoRec"></p>
-
-        <button onclick="enviarWhats('reciclagem')">Enviar Pedido</button>
+    <div id="servico" class="aba">
+        <div class="card">
+            <h3>Detalhes do Serviço</h3>
+            <div class="form-group">
+                <label>Tipo de Mão de Obra</label>
+                <input type="text" id="tipoServico" placeholder="Ex: Instalação Elétrica, Montagem">
+            </div>
+            <div class="form-group">
+                <label>Descrição do Problema/Tarefa</label>
+                <textarea id="descServico" rows="3" placeholder="Detalhe o que precisa ser feito..."></textarea>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label>Urgência</label>
+                    <select id="urgencia">
+                        <option value="Normal">Normal</option>
+                        <option value="Urgente">Urgente (Hoje)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Valor Estimado</label>
+                    <input type="number" id="valorServ" oninput="calcularServico()">
+                </div>
+            </div>
+            <div class="total-box" id="resServico">Total: R$ 0,00</div>
+        </div>
     </div>
-</section>
+
+    <div id="reciclagem" class="aba">
+        <div class="card">
+            <h3>Coleta / Reciclagem</h3>
+            <div class="form-group">
+                <label>Material</label>
+                <select id="tipoRec">
+                    <option value="Estopa">Estopa Branca/Colorida</option>
+                    <option value="Papelão">Papelão</option>
+                    <option value="Plástico">Plástico/Filme</option>
+                </select>
+            </div>
+            <div class="row">
+                <div class="form-group"><label>Peso (kg)</label><input type="number" id="peso" oninput="calcularRec()"></div>
+                <div class="form-group"><label>Valor/kg</label><input type="number" id="vKg" value="2.50" oninput="calcularRec()"></div>
+            </div>
+            <div class="total-box" id="resRec">Total: R$ 0,00</div>
+        </div>
+    </div>
+
+    <button class="btn-send" onclick="enviarWhatsapp()">
+        <i class="fab fa-whatsapp"></i> ENVIAR PEDIDO AGORA
+    </button>
+</div>
 
 <script>
-function abrirAba(nome) {
-    document.querySelectorAll('.aba').forEach(div => div.style.display = 'none');
-    document.getElementById(nome).style.display = 'block';
+function abrirAba(evt, nome) {
+    let i, aba, tablinks;
+    aba = document.getElementsByClassName("aba");
+    for (i = 0; i < aba.length; i++) aba[i].classList.remove("active");
+    tablinks = document.getElementsByClassName("tab-btn");
+    for (i = 0; i < tablinks.length; i++) tablinks[i].classList.remove("active");
+    document.getElementById(nome).classList.add("active");
+    evt.currentTarget.classList.add("active");
 }
 
-// ===== CALCULOS =====
 function calcularGrafica() {
-    let l = parseFloat(largura.value) || 0;
-    let a = parseFloat(altura.value) || 0;
-    let v = parseFloat(valorMetro.value) || 0;
-
-    let total = l * a * v;
-    resultadoGrafica.innerText = "Total: R$ " + total.toFixed(2);
+    let l = parseFloat(document.getElementById('largura').value) || 0;
+    let a = parseFloat(document.getElementById('altura').value) || 0;
+    let v = parseFloat(document.getElementById('vMetro').value) || 0;
+    document.getElementById('resGrafica').innerText = "Total: R$ " + (l * a * v).toFixed(2);
 }
 
 function calcularServico() {
-    let q = parseFloat(quantidade.value) || 0;
-    let v = parseFloat(valorUnit.value) || 0;
-
-    let total = q * v;
-    resultadoServico.innerText = "Total: R$ " + total.toFixed(2);
+    let v = parseFloat(document.getElementById('valorServ').value) || 0;
+    document.getElementById('resServico').innerText = "Total: R$ " + v.toFixed(2);
 }
 
 function calcularRec() {
-    let p = parseFloat(peso.value) || 0;
-    let v = parseFloat(valorKg.value) || 0;
-
-    let total = p * v;
-    resultadoRec.innerText = "Total: R$ " + total.toFixed(2);
+    let p = parseFloat(document.getElementById('peso').value) || 0;
+    let v = parseFloat(document.getElementById('vKg').value) || 0;
+    document.getElementById('resRec').innerText = "Total: R$ " + (p * v).toFixed(2);
 }
 
-// ===== ENVIO WHATSAPP =====
-function enviarWhats(tipo) {
-    let numero = "5562920026981";
+function enviarWhatsapp() {
+    const nome = document.getElementById('clienteNome').value;
+    const pag = document.getElementById('pagamento').value;
+    const abaAtiva = document.querySelector('.aba.active').id;
+    
+    if(!nome) return alert("Por favor, preencha o nome do cliente.");
 
-    let texto = "";
+    let detalhes = "";
 
-    if (tipo === 'grafica') {
-        texto = `Pedido Gráfica:
-Tipo: ${tipoGrafica.value}
-Largura: ${largura.value}
-Altura: ${altura.value}
-Valor/m²: ${valorMetro.value}
-${resultadoGrafica.innerText}`;
+    if(abaAtiva === 'grafica') {
+        detalhes = `📌 *PEDIDO GRÁFICA*\n` +
+                   `• Item: ${document.getElementById('tipoGrafica').value}\n` +
+                   `• Tam: ${document.getElementById('largura').value}m x ${document.getElementById('altura').value}m\n` +
+                   `• Acabamento: ${document.getElementById('acabamentoGrafica').value}\n` +
+                   `• ${document.getElementById('resGrafica').innerText}`;
+    } else if(abaAtiva === 'servico') {
+        detalhes = `📌 *SOLICITAÇÃO DE SERVIÇO*\n` +
+                   `• Serviço: ${document.getElementById('tipoServico').value}\n` +
+                   `• Descrição: ${document.getElementById('descServico').value}\n` +
+                   `• Urgência: ${document.getElementById('urgencia').value}\n` +
+                   `• ${document.getElementById('resServico').innerText}`;
+    } else {
+        detalhes = `📌 *COLETA / RECICLAGEM*\n` +
+                   `• Material: ${document.getElementById('tipoRec').value}\n` +
+                   `• Peso: ${document.getElementById('peso').value}kg\n` +
+                   `• ${document.getElementById('resRec').innerText}`;
     }
 
-    if (tipo === 'servico') {
-        texto = `Pedido Serviço:
-Tipo: ${tipoServico.value}
-Modo: ${modo.value}
-Quantidade: ${quantidade.value}
-Valor: ${valorUnit.value}
-${resultadoServico.innerText}`;
-    }
+    const mensagem = encodeURIComponent(
+        `🚀 *NOVO PEDIDO RECEBIDO*\n\n` +
+        `👤 *Cliente:* ${nome}\n` +
+        `💳 *Pagamento:* ${pag}\n` +
+        `📱 *WhatsApp:* ${document.getElementById('clienteWhats').value}\n\n` +
+        `${detalhes}\n\n` +
+        `--- Enviado via Sistema Web ---`
+    );
 
-    if (tipo === 'reciclagem') {
-        texto = `Pedido Reciclagem:
-Tipo: ${tipoRec.value}
-Peso: ${peso.value}
-Valor/kg: ${valorKg.value}
-${resultadoRec.innerText}`;
-    }
-
-    let url = `https://wa.me/${numero}?text=${encodeURIComponent(texto)}`;
-    window.open(url, '_blank');
+    window.open(`https://wa.me/5562920026981?text=${mensagem}`);
 }
 </script>
+
+</body>
+</html>
