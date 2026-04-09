@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Emerson Reparos & Tecnologia</title>
     <style>
+
+        
         :root {
             --primary: #0a3d62;
             --accent: #25D366;
@@ -53,7 +55,15 @@
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+.card ul {
+    padding-left: 18px;
+    margin: 10px 0 0;
+}
 
+.card li {
+    margin-bottom: 5px;
+    font-size: 14px;
+}
         /* Estilo da Galeria */
         .gallery {
             display: grid;
@@ -100,11 +110,50 @@
 
 <section>
     <h2>Serviços</h2>
-    <div class="services-grid">
-        <div class="card"><h3>🔌 Elétrica</h3><p>Reparos e instalações.</p></div>
-        <div class="card"><h3>🚿 Hidráulica</h3><p>Vazamentos e manutenções.</p></div>
-        <div class="card"><h3>💻 Tecnologia</h3><p>Sistemas, redes e suporte.</p></div>
+  <div class="services-grid">
+
+    <div class="card">
+        <h3>🔌 Elétrica</h3>
+        <ul>
+            <li>Troca de tomadas e interruptores</li>
+            <li>Instalação de chuveiros</li>
+            <li>Instalação de luminárias</li>
+            <li>Pequenos reparos elétricos</li>
+        </ul>
     </div>
+
+    <div class="card">
+        <h3>🚿 Hidráulica</h3>
+        <ul>
+            <li>Conserto de vazamentos</li>
+            <li>Troca de torneiras</li>
+            <li>Instalação de pias e vasos sanitários</li>
+            <li>Manutenção geral hidráulica</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>🧱 Reparos Gerais</h3>
+        <ul>
+            <li>Reboco e pequenos acabamentos</li>
+            <li>Pequenas reformas</li>
+            <li>Montagem de móveis</li>
+            <li>Serviços diversos residenciais</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>💻 Tecnologia</h3>
+        <ul>
+            <li>Instalação de internet e cabeamento</li>
+            <li>Formatação de computadores</li>
+            <li>Instalação de softwares</li>
+            <li>Configuração de roteadores</li>
+        </ul>
+    </div>
+
+</div>
+
 
     <h2>Meu Portfólio</h2>
     <div id="galeria-fotos" class="gallery">
