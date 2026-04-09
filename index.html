@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emerson Reparos & Tecnologia</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      color: #333;
+    }
+
+    header {
+      background: #0a3d62;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+    }
+
+    header p {
+      margin: 5px 0 0;
+      font-size: 14px;
+    }
+
+    section {
+      padding: 20px;
+    }
+
+    h2 {
+      color: #0a3d62;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .card {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .btn {
+      display: block;
+      text-align: center;
+      margin: 20px auto;
+      padding: 15px;
+      background: #25D366;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      max-width: 300px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #0a3d62;
+      color: white;
+    }
+
+    @media (max-width: 600px) {
+      .services {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Emerson Reparos & Tecnologia</h1>
+  <p>🔧 Da tomada ao Wi-Fi — solução completa para sua casa</p>
+</header>
+
+<section>
+  <h2>Serviços</h2>
+
+  <div class="services">
+
+    <div class="card">
+      <h3>🔌 Elétrica</h3>
+      <p>Troca de tomadas, chuveiro, iluminação e pequenos reparos.</p>
+    </div>
+
+    <div class="card">
+      <h3>🚿 Hidráulica</h3>
+      <p>Vazamentos, torneiras, pias e manutenção geral.</p>
+    </div>
+
+    <div class="card">
+      <h3>🧱 Reparos</h3>
+      <p>Reboco, montagem de móveis e serviços gerais.</p>
+    </div>
+
+    <div class="card">
+      <h3>💻 Tecnologia</h3>
+      <p>Internet, formatação, redes, instalação de sistemas.</p>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <h2>Por que escolher?</h2>
+  <p>✔ Atendimento rápido</p>
+  <p>✔ Profissional experiente</p>
+  <p>✔ Solução completa em um só lugar</p>
+</section>
+
+<a id="whatsappBtn" class="btn" href="#">
+  📲 Chamar no WhatsApp
+</a>
+
+<footer>
+  <p>© 2026 Emerson Reparos & Tecnologia</p>
+</footer>
+
+<script>
+  // COLOQUE SEU NÚMERO AQUI (com DDD, sem espaços)
+  const numero = "5562920026981";
+
+  const mensagem = encodeURIComponent(
+    "Olá! Vi seu site e preciso de um serviço."
+  );
+
+  const link = `https://wa.me/${numero}?text=${mensagem}`;
+
+  document.getElementById("whatsappBtn").href = link;
+</script>
+
+</body>
+</html>
